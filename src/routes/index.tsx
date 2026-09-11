@@ -1,15 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import logo from "@/assets/aica-logo.png.asset.json";
+const logoSrc = "/aica-logo.png";
 import { Countdown } from "@/components/site/Countdown";
 import { GoldLink, Portrait, Section, SectionHeading } from "@/components/site/ui";
 import {
   CATEGORY_GROUPS,
   COUNTRIES,
-  NOMINEES,
   VOTING_OPENS,
   ARTICLES,
   getCategory,
 } from "@/data/aica";
+import { useSiteData } from "@/context/SiteDataContext";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,7 +34,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const featured = NOMINEES.slice(0, 4);
+  const { content, nominees } = useSiteData();
+  const featured = nominees.slice(0, 4);
   const journal = ARTICLES.slice(0, 3);
 
   return (
@@ -43,17 +44,17 @@ function Home() {
         <div className="pointer-events-none absolute left-1/2 top-[-14rem] h-[38rem] w-[38rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[140px]" />
         <div className="relative mx-auto w-full max-w-[1240px] px-6 pb-24 pt-36 text-center">
           <img
-            src={logo.url}
+            src={logoSrc}
             alt="AICA — Angola Influence & Communication Awards"
-            className="mx-auto h-28 w-28 object-contain md:h-36 md:w-36"
+            className="mx-auto h-28 w-28 object-contain md:h-36 md:w-36 drop-shadow-[0_0_25px_rgba(212,175,55,0.3)]"
           />
-          <p className="eyebrow mt-10">Angola Influence &amp; Communication Awards</p>
+          <p className="eyebrow mt-10">{content.heroEyebrow}</p>
           <h1 className="mt-8 text-[3.4rem] uppercase leading-[0.95] tracking-[0.08em] md:text-[7rem]">
-            <span className="text-gold-gradient">Diamante</span>
+            <span className="text-gold-gradient">{content.heroTitle}</span>
           </h1>
           <div className="rule-gold mx-auto mt-8 max-w-md" />
           <p className="mx-auto mt-8 max-w-xl text-base uppercase leading-relaxed tracking-[0.22em] text-muted-foreground md:text-lg">
-            Celebrando os diamantes humanos da lusofonia
+            {content.heroSubtitle}
           </p>
 
           <div className="mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -119,17 +120,24 @@ function Home() {
               key={n.slug}
               to="/nomeados/$slug"
               params={{ slug: n.slug }}
-              className="surface-card group block"
+              className="surface-card group block overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-gold/60"
             >
-              <Portrait name={n.name} className="aspect-[4/5] w-full" />
+              <div className="relative">
+                <Portrait name={n.name} imageUrl={n.imageUrl} className="aspect-[4/5] w-full" />
+                <div className="absolute top-3 right-3 rounded-full border border-gold/40 bg-background/90 px-3 py-1 text-[0.62rem] font-medium tracking-wider text-gold shadow-md backdrop-blur-md">
+                  ⚡ {n.votesCount?.toLocaleString("pt-PT") ?? 0} votos
+                </div>
+              </div>
               <div className="p-6">
-                <p className="font-display text-base uppercase tracking-[0.12em] text-foreground">
+                <p className="font-display text-base uppercase tracking-[0.12em] text-foreground group-hover:text-gold transition-colors">
                   {n.name}
                 </p>
                 <p className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
                   {getCategory(n.categorySlug)?.name}
                 </p>
-                <p className="mt-5 text-[0.65rem] uppercase tracking-[0.3em] text-gold">Votar</p>
+                <p className="mt-5 text-[0.65rem] uppercase tracking-[0.3em] text-gold flex items-center gap-1">
+                  Votar <span className="transition-transform group-hover:translate-x-1">→</span>
+                </p>
               </div>
             </Link>
           ))}

@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Portrait, Section, SectionHeading } from "@/components/site/ui";
-import { CATEGORY_GROUPS, NOMINEES, getCategory } from "@/data/aica";
+import { CATEGORY_GROUPS, getCategory } from "@/data/aica";
 import { cn } from "@/lib/utils";
+import { useSiteData } from "@/context/SiteDataContext";
 
 export const Route = createFileRoute("/nomeados/")({
   head: () => ({
@@ -31,9 +32,10 @@ const FILTERS = [
 ];
 
 function Nomeados() {
+  const { nominees } = useSiteData();
   const [filter, setFilter] = useState<string>("todos");
 
-  const list = NOMINEES.filter((n) => {
+  const list = nominees.filter((n) => {
     if (filter === "todos") return true;
     return getCategory(n.categorySlug)?.group === filter;
   });
@@ -69,8 +71,13 @@ function Nomeados() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((n) => (
-            <article key={n.slug} className="group surface-card card-lift">
-              <Portrait name={n.name} className="aspect-[4/5] w-full" />
+            <article key={n.slug} className="group surface-card card-lift overflow-hidden">
+              <div className="relative">
+                <Portrait name={n.name} imageUrl={n.imageUrl} className="aspect-[4/5] w-full" />
+                <div className="absolute top-3 right-3 rounded-full border border-gold/40 bg-background/90 px-3 py-1 text-[0.62rem] font-medium tracking-wider text-gold shadow-md backdrop-blur-md">
+                  ⚡ {n.votesCount?.toLocaleString("pt-PT") ?? 0} votos
+                </div>
+              </div>
               <div className="p-7">
                 <h2 className="font-display text-lg uppercase tracking-[0.1em] text-foreground transition-colors duration-300 group-hover:text-gold">
                   {n.name}

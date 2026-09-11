@@ -135,15 +135,20 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+import { SiteDataProvider } from "@/context/SiteDataContext";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SiteLayout>
-        <Outlet />
-      </SiteLayout>
-      <Toaster />
+      <SiteDataProvider>
+        <SiteLayout>
+          <Outlet />
+        </SiteLayout>
+        <Toaster />
+      </SiteDataProvider>
     </QueryClientProvider>
   );
 }
+

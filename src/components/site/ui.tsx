@@ -108,7 +108,15 @@ function avatarUrl(name: string): string {
   return `https://api.dicebear.com/9.x/personas/svg?seed=${seed}&backgroundColor=1a1209,221a05,0d0d0d&radius=0`;
 }
 
-export function Portrait({ name, className }: { name: string; className?: string }) {
+export function Portrait({
+  name,
+  imageUrl,
+  className,
+}: {
+  name: string;
+  imageUrl?: string;
+  className?: string;
+}) {
   const initials = name
     .split(" ")
     .filter(Boolean)
@@ -116,6 +124,7 @@ export function Portrait({ name, className }: { name: string; className?: string
     .map((w) => w[0])
     .join("");
   const hue = portraitHue(name);
+  const src = imageUrl && imageUrl.trim().length > 0 ? imageUrl : avatarUrl(name);
 
   return (
     <div
@@ -138,12 +147,12 @@ export function Portrait({ name, className }: { name: string; className?: string
 
       {/* Avatar image */}
       <img
-        src={avatarUrl(name)}
+        src={src}
         alt={name}
-        className="absolute inset-0 h-full w-full object-cover object-top opacity-80 transition-transform duration-700 group-hover:scale-105"
+        className="absolute inset-0 h-full w-full object-cover object-top opacity-85 transition-transform duration-700 group-hover:scale-105"
         loading="lazy"
         onError={(e) => {
-          (e.currentTarget as HTMLImageElement).style.display = "none";
+          (e.currentTarget as HTMLImageElement).src = avatarUrl(name);
         }}
       />
 
