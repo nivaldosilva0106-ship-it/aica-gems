@@ -1,6 +1,6 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { GoldLink, Monogram, Section } from "@/components/site/ui";
-import { getCategory, getNominee } from "@/data/aica";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { GoldLink, Portrait, Section } from "@/components/site/ui";
+import { getCategory, getNominee, nomineesByCategory } from "@/data/aica";
 
 export const Route = createFileRoute("/nomeados/$slug")({
   loader: ({ params }) => {
@@ -11,7 +11,10 @@ export const Route = createFileRoute("/nomeados/$slug")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Nomeado não encontrado — AICA 2026" }, { name: "robots", content: "noindex" }],
+        meta: [
+          { title: "Nomeado não encontrado — AICA 2026" },
+          { name: "robots", content: "noindex" },
+        ],
       };
     }
     const { nominee, category } = loaderData;
@@ -32,11 +35,12 @@ export const Route = createFileRoute("/nomeados/$slug")({
 
 function NomineePage() {
   const { nominee, category } = Route.useLoaderData();
+  const peers = nomineesByCategory(nominee.categorySlug).filter((n) => n.slug !== nominee.slug);
 
   return (
     <Section className="pt-40">
       <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr]">
-        <Monogram name={nominee.name} className="aspect-[4/5] w-full" />
+        <Portrait name={nominee.name} className="aspect-[4/5] w-full" />
         <div>
           <p className="eyebrow">{category?.name}</p>
           <h1 className="mt-5 text-4xl uppercase leading-tight md:text-5xl">
@@ -52,11 +56,22 @@ function NomineePage() {
             {nominee.contribution}
           </p>
           <div className="mt-12 flex flex-wrap gap-4">
-            <GoldLink to="/votacao">Votar nesta categoria</GoldLink>
+            <Link
+              to="/votacao"
+              search={{ categoria: nominee.categorySlug, nomeado: nominee.slug }}
+              className="inline-flex items-center justify-center bg-gold px-9 py-4 text-[0.7rem] uppercase tracking-[0.3em] text-primary-foreground"
+            >
+              Votar nesta categoria
+            </Link>
             <GoldLink to="/nomeados" variant="outline">
               Todos os nomeados
             </GoldLink>
           </div>
+          {peers.length > 0 ? (
+            <p className="mt-12 text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground">
+              Também nomeados nesta categoria: {peers.map((p) => p.name).join(" · ")}
+            </p>
+          ) : null}
         </div>
       </div>
     </Section>

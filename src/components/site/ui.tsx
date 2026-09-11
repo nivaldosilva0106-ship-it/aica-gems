@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { portraitHue } from "@/data/aica";
 
 export function Section({
   children,
@@ -55,7 +56,7 @@ export function GoldLink({
 }) {
   return (
     <Link
-      to={to}
+      to={to as never}
       className={cn(
         "inline-flex items-center justify-center px-9 py-4 text-[0.7rem] uppercase tracking-[0.3em] transition-all duration-500",
         variant === "solid"
@@ -69,22 +70,45 @@ export function GoldLink({
   );
 }
 
-export function Monogram({ name, className }: { name: string; className?: string }) {
+export function Portrait({ name, className }: { name: string; className?: string }) {
   const initials = name
     .split(" ")
     .filter(Boolean)
     .slice(0, 2)
     .map((w) => w[0])
     .join("");
+  const hue = portraitHue(name);
 
   return (
     <div
-      className={cn(
-        "facet-bg flex items-center justify-center bg-secondary/60 text-3xl tracking-[0.2em]",
-        className,
-      )}
+      className={cn("facet-bg relative flex items-end justify-center overflow-hidden", className)}
+      style={{
+        background: `linear-gradient(165deg,
+          oklch(0.22 0.04 ${hue}) 0%,
+          oklch(0.14 0.02 ${hue}) 42%,
+          oklch(0.1 0.01 60) 100%)`,
+      }}
     >
-      <span className="font-display text-gold-gradient">{initials}</span>
+      <div
+        className="absolute inset-0 opacity-40"
+        style={{
+          backgroundImage: `radial-gradient(circle at 30% 20%, oklch(0.85 0.08 90 / 0.35), transparent 42%),
+            radial-gradient(circle at 80% 80%, oklch(0.7 0.12 ${hue} / 0.35), transparent 40%)`,
+        }}
+      />
+      <div className="relative z-[1] mb-[18%] flex flex-col items-center">
+        <span className="font-display text-4xl tracking-[0.22em] text-gold-gradient md:text-5xl">
+          {initials}
+        </span>
+        <span className="mt-4 text-[0.55rem] uppercase tracking-[0.4em] text-gold/70">
+          Diamante
+        </span>
+      </div>
     </div>
   );
+}
+
+export function Monogram({ name, className }: { name: string; className?: string }) {
+  if (className) return <Portrait name={name} className={className} />;
+  return <Portrait name={name} />;
 }

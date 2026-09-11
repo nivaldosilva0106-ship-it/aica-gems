@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Monogram, Section, SectionHeading } from "@/components/site/ui";
+import { Portrait, Section, SectionHeading } from "@/components/site/ui";
 import { CATEGORY_GROUPS, NOMINEES, getCategory } from "@/data/aica";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +25,10 @@ export const Route = createFileRoute("/nomeados/")({
   component: Nomeados,
 });
 
-const FILTERS = [{ id: "todos", label: "Todos" }, ...CATEGORY_GROUPS.map((g) => ({ id: g.id, label: g.label }))];
+const FILTERS = [
+  { id: "todos", label: "Todos" },
+  ...CATEGORY_GROUPS.map((g) => ({ id: g.id, label: g.short })),
+];
 
 function Nomeados() {
   const [filter, setFilter] = useState<string>("todos");
@@ -67,7 +70,7 @@ function Nomeados() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((n) => (
             <article key={n.slug} className="surface-card">
-              <Monogram name={n.name} className="aspect-[4/5] w-full" />
+              <Portrait name={n.name} className="aspect-[4/5] w-full" />
               <div className="p-7">
                 <h2 className="font-display text-lg uppercase tracking-[0.1em] text-foreground">
                   {n.name}
@@ -86,6 +89,7 @@ function Nomeados() {
                   </Link>
                   <Link
                     to="/votacao"
+                    search={{ categoria: n.categorySlug, nomeado: n.slug }}
                     className="border border-gold/50 px-5 py-3 text-[0.62rem] uppercase tracking-[0.28em] text-gold hover:bg-gold hover:text-primary-foreground"
                   >
                     Votar

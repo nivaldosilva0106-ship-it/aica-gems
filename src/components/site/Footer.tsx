@@ -9,10 +9,17 @@ const LINKS = [
   { to: "/como-votar", label: "Como votar" },
   { to: "/parceiros", label: "Parceiros" },
   { to: "/gala", label: "Gala" },
+  { to: "/imprensa", label: "Imprensa" },
   { to: "/noticias", label: "AICA Journal" },
+  { to: "/contactos", label: "Contactos" },
 ] as const;
 
-const SOCIAL = ["Instagram", "Facebook", "TikTok", "YouTube"];
+const SOCIAL = [
+  { label: "Instagram", href: "https://instagram.com" },
+  { label: "Facebook", href: "https://facebook.com" },
+  { label: "TikTok", href: "https://tiktok.com" },
+  { label: "YouTube", href: "https://youtube.com" },
+];
 
 export function Footer() {
   return (
@@ -21,9 +28,7 @@ export function Footer() {
         <div className="grid gap-14 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
             <img src={logo.url} alt="AICA 2026" className="h-16 w-16 object-contain" />
-            <p className="mt-6 font-display text-lg tracking-[0.14em] text-foreground">
-              AICA 2026
-            </p>
+            <p className="mt-6 font-display text-lg tracking-[0.14em] text-foreground">AICA 2026</p>
             <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">
               Angola Influence &amp; Communication Awards — Influência • Comunicação • Impacto.
             </p>
@@ -49,14 +54,29 @@ export function Footer() {
             <p className="eyebrow">Contactos</p>
             <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
               <li>Luanda — Angola</li>
-              <li>geral@aica.ao</li>
-              <li>imprensa@aica.ao</li>
+              <li>
+                <a href="mailto:geral@aica.ao" className="hover:text-gold">
+                  geral@aica.ao
+                </a>
+              </li>
+              <li>
+                <a href="mailto:imprensa@aica.ao" className="hover:text-gold">
+                  imprensa@aica.ao
+                </a>
+              </li>
             </ul>
             <p className="eyebrow mt-10">Redes</p>
             <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
               {SOCIAL.map((s) => (
-                <li key={s} className="text-sm text-muted-foreground hover:text-gold">
-                  {s}
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm text-muted-foreground hover:text-gold"
+                  >
+                    {s.label}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -66,11 +86,17 @@ export function Footer() {
         <div className="rule-gold my-12" />
 
         <div className="flex flex-col gap-4 text-xs uppercase tracking-[0.2em] text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>© 2026 AICA — Todos os direitos reservados.</p>
+          <p>© AICA 2026 — Todos os direitos reservados.</p>
           <div className="flex flex-wrap gap-6">
-            <span>Termos e Condições</span>
-            <span>Regulamento da Votação</span>
-            <span>Política de Privacidade</span>
+            <Link to="/termos" className="hover:text-gold">
+              Termos e Condições
+            </Link>
+            <Link to="/regulamento" className="hover:text-gold">
+              Regulamento da Votação
+            </Link>
+            <Link to="/privacidade" className="hover:text-gold">
+              Política de Privacidade
+            </Link>
           </div>
         </div>
       </div>
