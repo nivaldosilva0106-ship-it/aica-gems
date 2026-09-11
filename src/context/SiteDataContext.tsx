@@ -14,8 +14,8 @@ export type SiteContent = {
 };
 
 export type EditableNominee = Nominee & {
-  imageUrl?: string;
-  votesCount?: number;
+  imageUrl?: string | undefined;
+  votesCount?: number | undefined;
 };
 
 const DEFAULT_CONTENT: SiteContent = {
