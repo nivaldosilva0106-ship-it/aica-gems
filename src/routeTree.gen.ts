@@ -10,33 +10,79 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CategoriasRouteImport } from './routes/categorias'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as NomeadosIndexRouteImport } from './routes/nomeados.index'
+import { Route as NomeadosSlugRouteImport } from './routes/nomeados.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoriasRoute = CategoriasRouteImport.update({
+  id: '/categorias',
+  path: '/categorias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NomeadosIndexRoute = NomeadosIndexRouteImport.update({
+  id: '/nomeados/',
+  path: '/nomeados/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NomeadosSlugRoute = NomeadosSlugRouteImport.update({
+  id: '/nomeados/$slug',
+  path: '/nomeados/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/categorias': typeof CategoriasRoute
+  '/sobre': typeof SobreRoute
+  '/nomeados/$slug': typeof NomeadosSlugRoute
+  '/nomeados/': typeof NomeadosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/categorias': typeof CategoriasRoute
+  '/sobre': typeof SobreRoute
+  '/nomeados/$slug': typeof NomeadosSlugRoute
+  '/nomeados': typeof NomeadosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/categorias': typeof CategoriasRoute
+  '/sobre': typeof SobreRoute
+  '/nomeados/$slug': typeof NomeadosSlugRoute
+  '/nomeados/': typeof NomeadosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/categorias' | '/sobre' | '/nomeados/$slug' | '/nomeados/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/categorias' | '/sobre' | '/nomeados/$slug' | '/nomeados'
+  id:
+    | '__root__'
+    | '/'
+    | '/categorias'
+    | '/sobre'
+    | '/nomeados/$slug'
+    | '/nomeados/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CategoriasRoute: typeof CategoriasRoute
+  SobreRoute: typeof SobreRoute
+  NomeadosSlugRoute: typeof NomeadosSlugRoute
+  NomeadosIndexRoute: typeof NomeadosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +94,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/categorias': {
+      id: '/categorias'
+      path: '/categorias'
+      fullPath: '/categorias'
+      preLoaderRoute: typeof CategoriasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nomeados/': {
+      id: '/nomeados/'
+      path: '/nomeados'
+      fullPath: '/nomeados/'
+      preLoaderRoute: typeof NomeadosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nomeados/$slug': {
+      id: '/nomeados/$slug'
+      path: '/nomeados/$slug'
+      fullPath: '/nomeados/$slug'
+      preLoaderRoute: typeof NomeadosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CategoriasRoute: CategoriasRoute,
+  SobreRoute: SobreRoute,
+  NomeadosSlugRoute: NomeadosSlugRoute,
+  NomeadosIndexRoute: NomeadosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
