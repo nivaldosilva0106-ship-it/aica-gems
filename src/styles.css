@@ -225,3 +225,69 @@
       );
   }
 }
+
+/* ── Animations ────────────────────────────────────── */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Card hover scale for nominee cards */
+@utility card-lift {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px -16px oklch(0.79 0.13 85 / 0.25);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.99);
+  }
+}
+
+/* Premium gold pulse for vote buttons */
+@keyframes gold-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.79 0.13 85 / 0.5); }
+  50% { box-shadow: 0 0 0 8px oklch(0.79 0.13 85 / 0); }
+}
+
+@utility btn-vote {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, oklch(0.95 0.06 95 / 0.3) 60%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+
+  &:hover::after {
+    transform: translateX(100%);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px -8px oklch(0.79 0.13 85 / 0.5);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}

@@ -164,23 +164,23 @@ function Votacao() {
                     type="button"
                     onClick={() => setNomineeSlug(n.slug)}
                     className={cn(
-                      "surface-card text-left transition-transform",
-                      active && "ring-1 ring-gold",
+                      "group surface-card card-lift text-left",
+                      active && "ring-1 ring-gold shadow-[0_0_24px_-8px_oklch(0.79_0.13_85/0.4)]",
                     )}
                   >
                     <Portrait name={n.name} className="aspect-[4/5] w-full" />
                     <div className="p-6">
-                      <p className="font-display text-base uppercase tracking-[0.12em]">{n.name}</p>
+                      <p className="font-display text-base uppercase tracking-[0.12em] transition-colors duration-300 group-hover:text-gold">{n.name}</p>
                       <p className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
                         {n.country}
                       </p>
                       <p
                         className={cn(
-                          "mt-6 text-[0.62rem] uppercase tracking-[0.28em]",
-                          active ? "text-gold" : "text-muted-foreground",
+                          "mt-6 text-[0.62rem] uppercase tracking-[0.28em] transition-colors duration-300",
+                          active ? "text-gold" : "text-muted-foreground group-hover:text-gold/70",
                         )}
                       >
-                        {active ? "Seleccionado" : "Seleccionar"}
+                        {active ? "✦ Seleccionado" : "Seleccionar"}
                       </p>
                     </div>
                   </button>
@@ -196,9 +196,14 @@ function Votacao() {
               <button
                 type="button"
                 onClick={continueToConfirm}
-                className="mt-12 bg-gold px-10 py-4 text-[0.7rem] uppercase tracking-[0.3em] text-primary-foreground"
+                className="group relative mt-12 overflow-hidden bg-gold px-10 py-4 text-[0.7rem] uppercase tracking-[0.3em] text-primary-foreground btn-vote"
               >
-                Continuar
+                <span className="relative z-10 flex items-center gap-2">
+                  Continuar
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1">
+                    <path fillRule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clipRule="evenodd" />
+                  </svg>
+                </span>
               </button>
             )}
           </div>
@@ -258,17 +263,43 @@ function Votacao() {
               <button
                 type="button"
                 onClick={() => setStep("choose")}
-                className="border border-gold/50 px-8 py-4 text-[0.7rem] uppercase tracking-[0.3em] text-gold"
+                className="group relative overflow-hidden border border-gold/50 px-8 py-4 text-[0.7rem] uppercase tracking-[0.3em] text-gold transition-all duration-300 hover:border-gold hover:text-gold"
               >
-                Voltar
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold/15 to-transparent transition-transform duration-500 group-hover:translate-x-full"
+                />
+                <span className="relative z-10 flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3 rotate-180 transition-transform duration-300 group-hover:-translate-x-1">
+                    <path fillRule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clipRule="evenodd" />
+                  </svg>
+                  Voltar
+                </span>
               </button>
               <button
                 type="button"
                 disabled={submitting}
                 onClick={confirmVote}
-                className="bg-gold px-10 py-4 text-[0.7rem] uppercase tracking-[0.3em] text-primary-foreground disabled:opacity-60"
+                className="group relative overflow-hidden bg-gold px-10 py-4 text-[0.7rem] uppercase tracking-[0.3em] text-primary-foreground btn-vote disabled:opacity-60"
               >
-                {submitting ? "A registar…" : "Confirmar voto"}
+                <span className="relative z-10 flex items-center gap-2">
+                  {submitting ? (
+                    <>
+                      <svg className="h-3 w-3 animate-spin" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                      </svg>
+                      A registar…
+                    </>
+                  ) : (
+                    <>
+                      Confirmar voto
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1">
+                        <path fillRule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clipRule="evenodd" />
+                      </svg>
+                    </>
+                  )}
+                </span>
               </button>
             </div>
           </div>

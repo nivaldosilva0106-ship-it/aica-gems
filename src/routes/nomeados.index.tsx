@@ -69,10 +69,10 @@ function Nomeados() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((n) => (
-            <article key={n.slug} className="surface-card">
+            <article key={n.slug} className="group surface-card card-lift">
               <Portrait name={n.name} className="aspect-[4/5] w-full" />
               <div className="p-7">
-                <h2 className="font-display text-lg uppercase tracking-[0.1em] text-foreground">
+                <h2 className="font-display text-lg uppercase tracking-[0.1em] text-foreground transition-colors duration-300 group-hover:text-gold">
                   {n.name}
                 </h2>
                 <p className="mt-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
@@ -83,16 +83,20 @@ function Nomeados() {
                   <Link
                     to="/nomeados/$slug"
                     params={{ slug: n.slug }}
-                    className="text-[0.62rem] uppercase tracking-[0.28em] text-muted-foreground hover:text-gold"
+                    className="text-[0.62rem] uppercase tracking-[0.28em] text-muted-foreground transition-colors hover:text-gold"
                   >
                     Ver perfil
                   </Link>
                   <Link
                     to="/votacao"
                     search={{ categoria: n.categorySlug, nomeado: n.slug }}
-                    className="border border-gold/50 px-5 py-3 text-[0.62rem] uppercase tracking-[0.28em] text-gold hover:bg-gold hover:text-primary-foreground"
+                    className="group/btn relative overflow-hidden border border-gold/50 px-5 py-3 text-[0.62rem] uppercase tracking-[0.28em] text-gold transition-all duration-300 hover:border-gold hover:text-primary-foreground"
                   >
-                    Votar
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 scale-x-0 bg-gold origin-left transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/btn:scale-x-100"
+                    />
+                    <span className="relative z-10">Votar</span>
                   </Link>
                 </div>
               </div>

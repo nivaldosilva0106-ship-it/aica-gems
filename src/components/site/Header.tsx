@@ -65,9 +65,31 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Link
             to="/votacao"
-            className="hidden border border-gold/60 px-6 py-3 text-[0.68rem] uppercase tracking-[0.28em] text-gold transition-colors hover:bg-gold hover:text-primary-foreground sm:inline-block"
+            className="group relative hidden overflow-hidden border border-gold/70 px-7 py-3 text-[0.65rem] uppercase tracking-[0.3em] text-gold transition-all duration-500 hover:border-gold hover:text-primary-foreground sm:inline-flex sm:items-center sm:gap-2"
           >
-            Votar agora
+            {/* shimmer sweep */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-gold/90 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full"
+            />
+            {/* gold fill on hover */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 scale-x-0 bg-gold origin-left transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
+            />
+            <span className="relative z-10">Votar agora</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="relative z-10 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1"
+            >
+              <path
+                fillRule="evenodd"
+                d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z"
+                clipRule="evenodd"
+              />
+            </svg>
           </Link>
           <button
             type="button"
