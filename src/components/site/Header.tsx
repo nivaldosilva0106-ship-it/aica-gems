@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import logo from "@/assets/aica-logo.png.asset.json";
+const logoSrc = "/aica-logo.png";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -40,9 +40,9 @@ export function Header() {
       <div className="mx-auto flex h-20 max-w-[1240px] items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
           <img
-            src={logo.url}
+            src={logoSrc}
             alt="AICA — Angola Influence & Communication Awards"
-            className="h-11 w-11 object-contain"
+            className="h-14 w-14 object-contain"
           />
           <span className="hidden font-display text-sm tracking-[0.32em] text-foreground sm:block">
             AICA <span className="text-gold">2026</span>
