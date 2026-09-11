@@ -356,7 +356,7 @@ export function Admin() {
                   >
                     <div>
                       <div className="flex gap-4">
-                        <Portrait name={n.name} imageUrl={isEditing ? editForm.imageUrl : n.imageUrl} className="h-20 w-20 flex-shrink-0 rounded" />
+                        <Portrait name={n.name} imageUrl={isEditing ? editForm.imageUrl || undefined : n.imageUrl || undefined} className="h-20 w-20 flex-shrink-0 rounded" />
                         <div className="flex-1 min-w-0">
                           <span className="text-[0.6rem] uppercase tracking-[0.2em] text-gold/80 font-semibold">{cat?.name}</span>
                           <h3 className="font-display text-lg uppercase tracking-[0.1em] text-foreground truncate">{n.name}</h3>

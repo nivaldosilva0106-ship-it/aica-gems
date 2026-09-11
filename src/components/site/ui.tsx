@@ -114,8 +114,8 @@ export function Portrait({
   className,
 }: {
   name: string;
-  imageUrl?: string;
-  className?: string;
+  imageUrl?: string | undefined;
+  className?: string | undefined;
 }) {
   const initials = name
     .split(" ")
