@@ -30,7 +30,7 @@ function Categorias() {
         <SectionHeading
           eyebrow="AICA 2026"
           title="Categorias"
-          intro="Quinze prémios organizados em seis universos. Cada categoria tem descrição, nomeados e votação própria."
+          intro="Dezasseis prémios organizados em seis universos. Cada categoria tem descrição, nomeados e votação própria."
         />
       </Section>
 
@@ -39,9 +39,11 @@ function Categorias() {
         return (
           <Section key={group.id} className="pt-0">
             <div className="border-t border-border/70 pt-10">
-              <p className="font-display text-2xl uppercase tracking-[0.14em] text-gold-gradient">
-                {group.label}
-              </p>
+              <Link to="/categorias/$group" params={{ group: group.id }}>
+                <p className="font-display text-2xl uppercase tracking-[0.14em] text-gold-gradient">
+                  {group.label}
+                </p>
+              </Link>
               <p className="mt-3 max-w-xl text-sm text-muted-foreground">{group.blurb}</p>
 
               <div className="mt-10 grid gap-px bg-border/60 md:grid-cols-2 lg:grid-cols-3">
@@ -58,6 +60,7 @@ function Categorias() {
                     </p>
                     <Link
                       to="/votacao"
+                      search={{ categoria: c.slug }}
                       className="mt-4 inline-block text-[0.65rem] uppercase tracking-[0.3em] text-gold hover:underline"
                     >
                       Votar nesta categoria

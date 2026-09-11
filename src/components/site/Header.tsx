@@ -1,20 +1,25 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import logo from "@/assets/aica-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/sobre", label: "AICA 2026" },
+  { to: "/", label: "AICA 2026" },
   { to: "/nomeados", label: "Nomeados" },
   { to: "/categorias", label: "Categorias" },
   { to: "/votacao", label: "Votação" },
-  { to: "/gala", label: "Gala" },
+  { to: "/sobre", label: "Sobre o AICA" },
   { to: "/noticias", label: "Notícias" },
 ] as const;
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -34,18 +39,22 @@ export function Header() {
     >
       <div className="mx-auto flex h-20 max-w-[1240px] items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <img src={logo.url} alt="AICA — Angola Influence & Communication Awards" className="h-11 w-11 object-contain" />
+          <img
+            src={logo.url}
+            alt="AICA — Angola Influence & Communication Awards"
+            className="h-11 w-11 object-contain"
+          />
           <span className="hidden font-display text-sm tracking-[0.32em] text-foreground sm:block">
             AICA <span className="text-gold">2026</span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-7 xl:flex">
           {NAV.map((item) => (
             <Link
-              key={item.to}
+              key={`${item.to}-${item.label}`}
               to={item.to}
-              className="text-[0.7rem] uppercase tracking-[0.24em] text-muted-foreground transition-colors hover:text-gold"
+              className="text-[0.68rem] uppercase tracking-[0.24em] text-muted-foreground transition-colors hover:text-gold"
               activeProps={{ className: "text-gold" }}
             >
               {item.label}
@@ -62,10 +71,10 @@ export function Header() {
           </Link>
           <button
             type="button"
-            aria-label="Abrir menu"
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] border border-border lg:hidden"
+            className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] border border-border lg:flex xl:hidden"
           >
             <span
               className={cn(
@@ -86,14 +95,14 @@ export function Header() {
 
       <div
         className={cn(
-          "overflow-hidden border-t border-border/60 bg-background/95 backdrop-blur-xl transition-[max-height] duration-500 lg:hidden",
-          open ? "max-h-[26rem]" : "max-h-0",
+          "overflow-hidden border-t border-border/60 bg-background/95 backdrop-blur-xl transition-[max-height] duration-500 xl:hidden",
+          open ? "max-h-[32rem]" : "max-h-0",
         )}
       >
         <nav className="mx-auto flex max-w-[1240px] flex-col gap-1 px-6 py-6">
           {NAV.map((item) => (
             <Link
-              key={item.to}
+              key={`${item.to}-${item.label}-m`}
               to={item.to}
               onClick={() => setOpen(false)}
               className="border-b border-border/40 py-4 text-xs uppercase tracking-[0.28em] text-muted-foreground"

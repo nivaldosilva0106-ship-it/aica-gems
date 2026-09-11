@@ -10,14 +10,32 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CategoriasRouteImport } from './routes/categorias'
+import { Route as ComoVotarRouteImport } from './routes/como-votar'
+import { Route as ContactosRouteImport } from './routes/contactos'
+import { Route as GalaRouteImport } from './routes/gala'
+import { Route as ImprensaRouteImport } from './routes/imprensa'
+import { Route as ParceirosRouteImport } from './routes/parceiros'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as RegulamentoRouteImport } from './routes/regulamento'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as TermosRouteImport } from './routes/termos'
+import { Route as VotacaoRouteImport } from './routes/votacao'
+import { Route as CategoriasGroupRouteImport } from './routes/categorias.$group'
 import { Route as NomeadosIndexRouteImport } from './routes/nomeados.index'
 import { Route as NomeadosSlugRouteImport } from './routes/nomeados.$slug'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
+import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriasRoute = CategoriasRouteImport.update({
@@ -25,10 +43,60 @@ const CategoriasRoute = CategoriasRouteImport.update({
   path: '/categorias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComoVotarRoute = ComoVotarRouteImport.update({
+  id: '/como-votar',
+  path: '/como-votar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactosRoute = ContactosRouteImport.update({
+  id: '/contactos',
+  path: '/contactos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalaRoute = GalaRouteImport.update({
+  id: '/gala',
+  path: '/gala',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImprensaRoute = ImprensaRouteImport.update({
+  id: '/imprensa',
+  path: '/imprensa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceirosRoute = ParceirosRouteImport.update({
+  id: '/parceiros',
+  path: '/parceiros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegulamentoRoute = RegulamentoRouteImport.update({
+  id: '/regulamento',
+  path: '/regulamento',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
   getParentRoute: () => rootRouteImport,
+} as any)
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VotacaoRoute = VotacaoRouteImport.update({
+  id: '/votacao',
+  path: '/votacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriasGroupRoute = CategoriasGroupRouteImport.update({
+  id: '/$group',
+  path: '/$group',
+  getParentRoute: () => CategoriasRoute,
 } as any)
 const NomeadosIndexRoute = NomeadosIndexRouteImport.update({
   id: '/nomeados/',
@@ -40,49 +108,159 @@ const NomeadosSlugRoute = NomeadosSlugRouteImport.update({
   path: '/nomeados/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
+  id: '/noticias/',
+  path: '/noticias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
+  id: '/noticias/$slug',
+  path: '/noticias/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/categorias': typeof CategoriasRoute
+  '/admin': typeof AdminRoute
+  '/categorias': typeof CategoriasRouteWithChildren
+  '/como-votar': typeof ComoVotarRoute
+  '/contactos': typeof ContactosRoute
+  '/gala': typeof GalaRoute
+  '/imprensa': typeof ImprensaRoute
+  '/parceiros': typeof ParceirosRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/regulamento': typeof RegulamentoRoute
   '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
+  '/votacao': typeof VotacaoRoute
+  '/categorias/$group': typeof CategoriasGroupRoute
   '/nomeados/$slug': typeof NomeadosSlugRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/nomeados/': typeof NomeadosIndexRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/categorias': typeof CategoriasRoute
+  '/admin': typeof AdminRoute
+  '/categorias': typeof CategoriasRouteWithChildren
+  '/como-votar': typeof ComoVotarRoute
+  '/contactos': typeof ContactosRoute
+  '/gala': typeof GalaRoute
+  '/imprensa': typeof ImprensaRoute
+  '/parceiros': typeof ParceirosRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/regulamento': typeof RegulamentoRoute
   '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
+  '/votacao': typeof VotacaoRoute
+  '/categorias/$group': typeof CategoriasGroupRoute
   '/nomeados/$slug': typeof NomeadosSlugRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/nomeados': typeof NomeadosIndexRoute
+  '/noticias': typeof NoticiasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/categorias': typeof CategoriasRoute
+  '/admin': typeof AdminRoute
+  '/categorias': typeof CategoriasRouteWithChildren
+  '/como-votar': typeof ComoVotarRoute
+  '/contactos': typeof ContactosRoute
+  '/gala': typeof GalaRoute
+  '/imprensa': typeof ImprensaRoute
+  '/parceiros': typeof ParceirosRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/regulamento': typeof RegulamentoRoute
   '/sobre': typeof SobreRoute
+  '/termos': typeof TermosRoute
+  '/votacao': typeof VotacaoRoute
+  '/categorias/$group': typeof CategoriasGroupRoute
   '/nomeados/$slug': typeof NomeadosSlugRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/nomeados/': typeof NomeadosIndexRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/categorias' | '/sobre' | '/nomeados/$slug' | '/nomeados/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/categorias'
+    | '/como-votar'
+    | '/contactos'
+    | '/gala'
+    | '/imprensa'
+    | '/parceiros'
+    | '/privacidade'
+    | '/regulamento'
+    | '/sobre'
+    | '/termos'
+    | '/votacao'
+    | '/categorias/$group'
+    | '/nomeados/$slug'
+    | '/noticias/$slug'
+    | '/nomeados/'
+    | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/categorias' | '/sobre' | '/nomeados/$slug' | '/nomeados'
+  to:
+    | '/'
+    | '/admin'
+    | '/categorias'
+    | '/como-votar'
+    | '/contactos'
+    | '/gala'
+    | '/imprensa'
+    | '/parceiros'
+    | '/privacidade'
+    | '/regulamento'
+    | '/sobre'
+    | '/termos'
+    | '/votacao'
+    | '/categorias/$group'
+    | '/nomeados/$slug'
+    | '/noticias/$slug'
+    | '/nomeados'
+    | '/noticias'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/categorias'
+    | '/como-votar'
+    | '/contactos'
+    | '/gala'
+    | '/imprensa'
+    | '/parceiros'
+    | '/privacidade'
+    | '/regulamento'
     | '/sobre'
+    | '/termos'
+    | '/votacao'
+    | '/categorias/$group'
     | '/nomeados/$slug'
+    | '/noticias/$slug'
     | '/nomeados/'
+    | '/noticias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CategoriasRoute: typeof CategoriasRoute
+  AdminRoute: typeof AdminRoute
+  CategoriasRoute: typeof CategoriasRouteWithChildren
+  ComoVotarRoute: typeof ComoVotarRoute
+  ContactosRoute: typeof ContactosRoute
+  GalaRoute: typeof GalaRoute
+  ImprensaRoute: typeof ImprensaRoute
+  ParceirosRoute: typeof ParceirosRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
+  RegulamentoRoute: typeof RegulamentoRoute
   SobreRoute: typeof SobreRoute
+  TermosRoute: typeof TermosRoute
+  VotacaoRoute: typeof VotacaoRoute
   NomeadosSlugRoute: typeof NomeadosSlugRoute
+  NoticiasSlugRoute: typeof NoticiasSlugRoute
   NomeadosIndexRoute: typeof NomeadosIndexRoute
+  NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -94,11 +272,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/categorias': {
       id: '/categorias'
       path: '/categorias'
       fullPath: '/categorias'
       preLoaderRoute: typeof CategoriasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/como-votar': {
+      id: '/como-votar'
+      path: '/como-votar'
+      fullPath: '/como-votar'
+      preLoaderRoute: typeof ComoVotarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contactos': {
+      id: '/contactos'
+      path: '/contactos'
+      fullPath: '/contactos'
+      preLoaderRoute: typeof ContactosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gala': {
+      id: '/gala'
+      path: '/gala'
+      fullPath: '/gala'
+      preLoaderRoute: typeof GalaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/imprensa': {
+      id: '/imprensa'
+      path: '/imprensa'
+      fullPath: '/imprensa'
+      preLoaderRoute: typeof ImprensaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceiros': {
+      id: '/parceiros'
+      path: '/parceiros'
+      fullPath: '/parceiros'
+      preLoaderRoute: typeof ParceirosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/regulamento': {
+      id: '/regulamento'
+      path: '/regulamento'
+      fullPath: '/regulamento'
+      preLoaderRoute: typeof RegulamentoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sobre': {
@@ -107,6 +341,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/sobre'
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/votacao': {
+      id: '/votacao'
+      path: '/votacao'
+      fullPath: '/votacao'
+      preLoaderRoute: typeof VotacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categorias/$group': {
+      id: '/categorias/$group'
+      path: '/$group'
+      fullPath: '/categorias/$group'
+      preLoaderRoute: typeof CategoriasGroupRouteImport
+      parentRoute: typeof CategoriasRoute
     }
     '/nomeados/': {
       id: '/nomeados/'
@@ -122,15 +377,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NomeadosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/noticias'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/$slug': {
+      id: '/noticias/$slug'
+      path: '/noticias/$slug'
+      fullPath: '/noticias/$slug'
+      preLoaderRoute: typeof NoticiasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface CategoriasRouteChildren {
+  CategoriasGroupRoute: typeof CategoriasGroupRoute
+}
+
+const CategoriasRouteChildren: CategoriasRouteChildren = {
+  CategoriasGroupRoute: CategoriasGroupRoute,
+}
+
+const CategoriasRouteWithChildren = CategoriasRoute._addFileChildren(
+  CategoriasRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CategoriasRoute: CategoriasRoute,
+  AdminRoute: AdminRoute,
+  CategoriasRoute: CategoriasRouteWithChildren,
+  ComoVotarRoute: ComoVotarRoute,
+  ContactosRoute: ContactosRoute,
+  GalaRoute: GalaRoute,
+  ImprensaRoute: ImprensaRoute,
+  ParceirosRoute: ParceirosRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
+  RegulamentoRoute: RegulamentoRoute,
   SobreRoute: SobreRoute,
+  TermosRoute: TermosRoute,
+  VotacaoRoute: VotacaoRoute,
   NomeadosSlugRoute: NomeadosSlugRoute,
+  NoticiasSlugRoute: NoticiasSlugRoute,
   NomeadosIndexRoute: NomeadosIndexRoute,
+  NoticiasIndexRoute: NoticiasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

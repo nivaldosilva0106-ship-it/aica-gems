@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import logo from "@/assets/aica-logo.png.asset.json";
 import { Countdown } from "@/components/site/Countdown";
-import { GoldLink, Monogram, Section, SectionHeading } from "@/components/site/ui";
+import { GoldLink, Portrait, Section, SectionHeading } from "@/components/site/ui";
 import {
   CATEGORY_GROUPS,
   COUNTRIES,
   NOMINEES,
   VOTING_OPENS,
+  ARTICLES,
   getCategory,
 } from "@/data/aica";
 
@@ -22,7 +23,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "AICA 2026 — Celebrando os Diamantes Humanos da Lusofonia" },
       {
         property: "og:description",
-        content: "Votação oficial, nomeados e categorias do Angola Influence & Communication Awards.",
+        content:
+          "Votação oficial, nomeados e categorias do Angola Influence & Communication Awards.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -33,10 +35,10 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const featured = NOMINEES.slice(0, 4);
+  const journal = ARTICLES.slice(0, 3);
 
   return (
     <>
-      {/* HERO */}
       <section className="facet-bg relative flex min-h-screen items-center overflow-hidden">
         <div className="pointer-events-none absolute left-1/2 top-[-14rem] h-[38rem] w-[38rem] -translate-x-1/2 rounded-full bg-gold/10 blur-[140px]" />
         <div className="relative mx-auto w-full max-w-[1240px] px-6 pb-24 pt-36 text-center">
@@ -67,14 +69,12 @@ function Home() {
         </div>
       </section>
 
-      {/* CONTADOR */}
       <Section className="py-20 md:py-24">
         <div className="mx-auto max-w-3xl border border-border/70 bg-card/40 px-6 py-14 md:px-12">
-          <Countdown target={VOTING_OPENS} label="A votação abre em 01 Outubro 2026" />
+          <Countdown target={VOTING_OPENS} label="Votação abre em 01 Outubro 2026" />
         </div>
       </Section>
 
-      {/* O AICA */}
       <Section>
         <div className="grid gap-16 md:grid-cols-2 md:items-start">
           <SectionHeading
@@ -106,7 +106,6 @@ function Home() {
         </div>
       </Section>
 
-      {/* NOMEADOS EM DESTAQUE */}
       <Section>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading eyebrow="Em destaque" title="Nomeados AICA 2026" />
@@ -122,7 +121,7 @@ function Home() {
               params={{ slug: n.slug }}
               className="surface-card group block"
             >
-              <Monogram name={n.name} className="aspect-[4/5] w-full" />
+              <Portrait name={n.name} className="aspect-[4/5] w-full" />
               <div className="p-6">
                 <p className="font-display text-base uppercase tracking-[0.12em] text-foreground">
                   {n.name}
@@ -137,21 +136,25 @@ function Home() {
         </div>
       </Section>
 
-      {/* CATEGORIAS */}
       <Section>
         <SectionHeading
           eyebrow="Categorias"
           title="Seis universos de reconhecimento"
-          intro="Quinze categorias distribuídas por influência, comunicação, cultura, negócios, impacto e inovação."
+          intro="Dezasseis categorias distribuídas por influência, comunicação, cultura, negócios, impacto e inovação."
         />
         <div className="mt-14 grid gap-px bg-border/60 sm:grid-cols-2 lg:grid-cols-3">
           {CATEGORY_GROUPS.map((g) => (
-            <div key={g.id} className="bg-background/80 p-8">
+            <Link
+              key={g.id}
+              to="/categorias/$group"
+              params={{ group: g.id }}
+              className="bg-background/80 p-8 transition-colors hover:bg-card"
+            >
               <p className="font-display text-lg uppercase tracking-[0.12em] text-gold-gradient">
                 {g.label}
               </p>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{g.blurb}</p>
-            </div>
+            </Link>
           ))}
         </div>
         <GoldLink to="/categorias" variant="outline" className="mt-12">
@@ -159,14 +162,23 @@ function Home() {
         </GoldLink>
       </Section>
 
-      {/* DIAMANTES DA LUSOFONIA */}
       <Section>
         <SectionHeading
           align="center"
           eyebrow="Dimensão internacional"
           title="Diamantes da Lusofonia"
         />
-        <div className="mt-14 flex flex-wrap justify-center gap-x-10 gap-y-4">
+        <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {featured.map((n) => (
+            <Link key={n.slug} to="/nomeados/$slug" params={{ slug: n.slug }} className="group">
+              <Portrait name={n.name} className="aspect-[3/4] w-full" />
+              <p className="mt-3 text-center text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground group-hover:text-gold">
+                {n.country}
+              </p>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-12 flex flex-wrap justify-center gap-x-10 gap-y-4">
           {COUNTRIES.map((c) => (
             <span
               key={c}
@@ -178,7 +190,6 @@ function Home() {
         </div>
       </Section>
 
-      {/* JOURNAL */}
       <Section>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
@@ -189,6 +200,22 @@ function Home() {
           <GoldLink to="/noticias" variant="outline">
             Ler o Journal
           </GoldLink>
+        </div>
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
+          {journal.map((a) => (
+            <Link
+              key={a.slug}
+              to="/noticias/$slug"
+              params={{ slug: a.slug }}
+              className="surface-card block p-8"
+            >
+              <p className="text-[0.62rem] uppercase tracking-[0.3em] text-gold">{a.tag}</p>
+              <h3 className="mt-4 font-display text-xl uppercase leading-snug tracking-[0.08em]">
+                {a.title}
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{a.excerpt}</p>
+            </Link>
+          ))}
         </div>
       </Section>
     </>
