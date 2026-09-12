@@ -10,7 +10,7 @@ type Search = {
 export const Route = createFileRoute("/login")({
   validateSearch: (search: Record<string, unknown>): Search => {
     return {
-      mode: search.mode === "signup" ? "signup" : "login",
+      mode: search["mode"] === "signup" ? "signup" : "login",
     };
   },
   head: () => ({
