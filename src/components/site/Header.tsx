@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 const logoSrc = "/aica-logo.png";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 
 const NAV = [
   { to: "/", label: "AICA 2026" },
@@ -13,6 +14,7 @@ const NAV = [
 ] as const;
 
 export function Header() {
+  const { user, profile } = useAuth();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -63,6 +65,23 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {user ? (
+            <Link
+              to="/perfil"
+              className="flex items-center gap-2 border border-gold/60 bg-gold/10 px-4 py-2.5 text-[0.65rem] uppercase tracking-[0.2em] text-gold hover:border-gold hover:bg-gold/20 transition-all duration-300 rounded-full"
+            >
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="font-semibold">{profile?.displayName?.split(" ")[0] || "Perfil"}</span>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="border border-border/80 px-5 py-2.5 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground hover:border-gold hover:text-gold transition-colors"
+            >
+              Entrar
+            </Link>
+          )}
+
           <Link
             to="/votacao"
             className="group relative hidden overflow-hidden border border-gold/70 px-7 py-3 text-[0.65rem] uppercase tracking-[0.3em] text-gold transition-all duration-500 hover:border-gold hover:text-primary-foreground sm:inline-flex sm:items-center sm:gap-2"

@@ -16,7 +16,9 @@ import { Route as ComoVotarRouteImport } from './routes/como-votar'
 import { Route as ContactosRouteImport } from './routes/contactos'
 import { Route as GalaRouteImport } from './routes/gala'
 import { Route as ImprensaRouteImport } from './routes/imprensa'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ParceirosRouteImport } from './routes/parceiros'
+import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as RegulamentoRouteImport } from './routes/regulamento'
 import { Route as SobreRouteImport } from './routes/sobre'
@@ -63,9 +65,19 @@ const ImprensaRoute = ImprensaRouteImport.update({
   path: '/imprensa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ParceirosRoute = ParceirosRouteImport.update({
   id: '/parceiros',
   path: '/parceiros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
@@ -127,7 +139,9 @@ export interface FileRoutesByFullPath {
   '/contactos': typeof ContactosRoute
   '/gala': typeof GalaRoute
   '/imprensa': typeof ImprensaRoute
+  '/login': typeof LoginRoute
   '/parceiros': typeof ParceirosRoute
+  '/perfil': typeof PerfilRoute
   '/privacidade': typeof PrivacidadeRoute
   '/regulamento': typeof RegulamentoRoute
   '/sobre': typeof SobreRoute
@@ -147,7 +161,9 @@ export interface FileRoutesByTo {
   '/contactos': typeof ContactosRoute
   '/gala': typeof GalaRoute
   '/imprensa': typeof ImprensaRoute
+  '/login': typeof LoginRoute
   '/parceiros': typeof ParceirosRoute
+  '/perfil': typeof PerfilRoute
   '/privacidade': typeof PrivacidadeRoute
   '/regulamento': typeof RegulamentoRoute
   '/sobre': typeof SobreRoute
@@ -168,7 +184,9 @@ export interface FileRoutesById {
   '/contactos': typeof ContactosRoute
   '/gala': typeof GalaRoute
   '/imprensa': typeof ImprensaRoute
+  '/login': typeof LoginRoute
   '/parceiros': typeof ParceirosRoute
+  '/perfil': typeof PerfilRoute
   '/privacidade': typeof PrivacidadeRoute
   '/regulamento': typeof RegulamentoRoute
   '/sobre': typeof SobreRoute
@@ -190,7 +208,9 @@ export interface FileRouteTypes {
     | '/contactos'
     | '/gala'
     | '/imprensa'
+    | '/login'
     | '/parceiros'
+    | '/perfil'
     | '/privacidade'
     | '/regulamento'
     | '/sobre'
@@ -210,7 +230,9 @@ export interface FileRouteTypes {
     | '/contactos'
     | '/gala'
     | '/imprensa'
+    | '/login'
     | '/parceiros'
+    | '/perfil'
     | '/privacidade'
     | '/regulamento'
     | '/sobre'
@@ -230,7 +252,9 @@ export interface FileRouteTypes {
     | '/contactos'
     | '/gala'
     | '/imprensa'
+    | '/login'
     | '/parceiros'
+    | '/perfil'
     | '/privacidade'
     | '/regulamento'
     | '/sobre'
@@ -251,7 +275,9 @@ export interface RootRouteChildren {
   ContactosRoute: typeof ContactosRoute
   GalaRoute: typeof GalaRoute
   ImprensaRoute: typeof ImprensaRoute
+  LoginRoute: typeof LoginRoute
   ParceirosRoute: typeof ParceirosRoute
+  PerfilRoute: typeof PerfilRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   RegulamentoRoute: typeof RegulamentoRoute
   SobreRoute: typeof SobreRoute
@@ -314,11 +340,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImprensaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/parceiros': {
       id: '/parceiros'
       path: '/parceiros'
       fullPath: '/parceiros'
       preLoaderRoute: typeof ParceirosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacidade': {
@@ -414,7 +454,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContactosRoute: ContactosRoute,
   GalaRoute: GalaRoute,
   ImprensaRoute: ImprensaRoute,
+  LoginRoute: LoginRoute,
   ParceirosRoute: ParceirosRoute,
+  PerfilRoute: PerfilRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   RegulamentoRoute: RegulamentoRoute,
   SobreRoute: SobreRoute,

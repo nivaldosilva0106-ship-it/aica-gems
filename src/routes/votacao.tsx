@@ -6,6 +6,7 @@ import { CATEGORIES } from "@/data/aica";
 import { castVoteFn, getChallengeFn } from "@/lib/vote-fn";
 import { cn } from "@/lib/utils";
 import { useSiteData } from "@/context/SiteDataContext";
+import { useAuth } from "@/context/AuthContext";
 
 type Search = {
   categoria?: string;
@@ -40,6 +41,7 @@ type Step = "choose" | "confirm" | "done";
 
 function Votacao() {
   const { nominees: allNominees, categories, incrementNomineeVotes, content } = useSiteData();
+  const { recordVoteInFirebase } = useAuth();
   const search = Route.useSearch();
   const initialCategory =
     categories.find((c) => c.slug === search.categoria)?.slug ?? categories[0]?.slug ?? "";
@@ -112,12 +114,14 @@ function Votacao() {
         return;
       }
       incrementNomineeVotes(nomineeSlug);
+      await recordVoteInFirebase(categorySlug, nomineeSlug, selected.name);
       setReceipt(result.receipt);
       setPreview(result.preview);
       setStep("done");
     } catch {
       // Fallback increment for local demo mode if server fn errors out
       incrementNomineeVotes(nomineeSlug);
+      await recordVoteInFirebase(categorySlug, nomineeSlug, selected.name);
       setReceipt("AICA-" + Math.random().toString(36).substring(2, 9).toUpperCase());
       setStep("done");
     } finally {
